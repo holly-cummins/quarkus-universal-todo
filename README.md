@@ -5,8 +5,8 @@ It:
 
 * has a REST API
 * uses Panache with a PostGreSQL database
-* use OpenId Connect and JWT token to secure the application
-* use Qute as template engine 
+* uses OpenId Connect and JWT token to secure the application
+* uses Qute as template engine 
 
 The frontend uses Vue.js.
 
