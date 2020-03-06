@@ -26,6 +26,14 @@ public class TodoResource {
         return Todo.getTodos(getCurrentUser());
     }
 
+    @GET
+    @Path("/{id}")
+    public Todo getOne(@PathParam("id") Long id) {
+        return Todo.getTodo(getCurrentUser(), id).orElseThrow(
+                () ->  new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND)
+        );
+    }
+
     @POST
     @Transactional
     public Response create(@Valid Todo item) {

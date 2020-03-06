@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Todo extends PanacheEntity  {
@@ -31,4 +32,7 @@ public class Todo extends PanacheEntity  {
         delete("owner = ?1 and completed = ?2", owner, true);
     }
 
+    public static Optional<Todo> getTodo(String owner, Long id) {
+        return find("owner = ?1 and id = ?2", owner, id).firstResultOptional();
+    }
 }
