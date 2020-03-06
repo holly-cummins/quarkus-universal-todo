@@ -42,7 +42,7 @@ Open http://localhost:8080 and log in with one of the user mentioned above.
 
 ## Packaging and running the application
 
-The application is packageable using `./mvnw package`.
+The application is packaged using `./mvnw package`.
 It produces the executable `universal-todo-1.0.0-SNAPSHOT-runner.jar` file in `/target` directory.
 Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/lib` directory.
 
@@ -52,7 +52,7 @@ The application is now runnable using `java -jar target/universal-todo-1.0.0-SNA
 
 You can create a native executable using: `./mvnw package -Pnative`.
 
-Or you can use Docker to build the native executable using: `./mvnw package -Pnative -Dquarkus.native.container-build=true`.
+Or, if you don't have GraalVM installed, you can run the build in a container to create the native executable using: `./mvnw package -Pnative -Dquarkus.native.container-build=true`.
 
 You can then execute your binary: `./target/universal-todo-1.0.0-SNAPSHOT-runner`
 
