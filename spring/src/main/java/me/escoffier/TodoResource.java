@@ -51,7 +51,7 @@ public class TodoResource {
     @PatchMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<Todo> update(@Valid @RequestBody Todo todo, @PathVariable("id") Long id, Principal principal) {
-        Todo entity = todoRepository.findById(id)
+        Todo entity = todoRepository.findByOwnerAndId(principal.getName(), id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo with id of " + id + " does not exist."));
         entity.setId(id);
         entity.setCompleted(todo.isCompleted());
