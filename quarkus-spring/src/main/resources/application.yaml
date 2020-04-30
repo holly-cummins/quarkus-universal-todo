@@ -19,3 +19,14 @@ app:
     oidc-realm: quarkus
     oidc-app: app
     oidc-server: http://localhost:8180/auth
+
+"%test":
+  quarkus:
+    oidc:
+      enabled: false
+    security:
+      users:
+        file:
+          enabled: true
+          realm-name: quarkus
+          plain-text: true

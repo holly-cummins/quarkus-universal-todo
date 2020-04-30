@@ -29,10 +29,10 @@ public class FrontendResource {
 
     @GetMapping(path = "/keycloak.js", produces = "text/javascript")
     public String get() {
-        return "const keycloak_options = { \"realm\": \"{realm}\", \"url\": \"{oidcServer}\", \"clientId\": \"{appName}\"};"
-                .replace("{realm}", realm)
-                .replace("{oidcServer}", oicdServer)
-                .replace("{appName}", appName);
+        return String.format(
+                "const keycloak_options = { \"realm\": \"%s\", \"url\": \"%s\", \"clientId\": \"%s\"};",
+                realm, oicdServer, appName
+        );
     }
 
     @GetMapping
