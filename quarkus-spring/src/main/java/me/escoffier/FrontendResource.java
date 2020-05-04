@@ -26,8 +26,8 @@ public class FrontendResource {
     @GetMapping(path = "/keycloak.js", produces = "text/javascript")
     public String get() {
         return String.format(
-            "const keycloak_options = { \"realm\": \"%s\", \"url\": \"%s\", \"clientId\": \"%s\"};",
-            realm, oicdServer, appName
+                "const keycloak_options = { \"realm\": \"%s\", \"url\": \"%s\", \"clientId\": \"%s\"};",
+                realm, oicdServer, appName
         );
     }
 
