@@ -69,7 +69,7 @@ public class TodoResource {
 
     @DeleteMapping
     @Transactional
-    public ResponseEntity<Void> deleteCompleted(Principal principal) {
+    public ResponseEntity<Void> deleteCompleted() {
         todoRepository.clearCompleted(getCurrentUser());
         return ResponseEntity.noContent().build();
     }
