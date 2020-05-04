@@ -14,10 +14,6 @@ import java.net.URI;
 @RequestMapping("/")
 public class FrontendResource {
 
-    //    @Inject
-//    @ResourcePath("keycloak.js")
-//    Template keycloak;
-//
     @Value("${app.frontend.oidc-server}")
     String oicdServer;
 
