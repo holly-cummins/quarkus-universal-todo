@@ -4,13 +4,13 @@ logging.level:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/quarkus_test
+
     driver: org.postgresql.Driver
     username: quarkus_test
     password: quarkus_test
   jpa:
     hibernate.ddl-auto: create-drop
-    databas: POSTGRESQL
-
+    database: POSTGRESQL
 
   security:
     oauth2:
