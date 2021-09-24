@@ -1,9 +1,4 @@
 quarkus:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/quarkus_test
-    driver: org.postgresql.Driver
-    username: quarkus_test
-    password: quarkus_test
 
   hibernate-orm:
     database:
@@ -30,3 +25,28 @@ app:
           enabled: true
           realm-name: quarkus
           plain-text: true
+
+"%prod":
+  quarkus:
+    datasource:
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/quarkus_test
+        driver: org.postgresql.Driver
+      username: quarkus_test
+      password: quarkus_test
+
+"%basic":
+  quarkus:
+    oidc:
+      enabled: false
+    security:
+      users:
+        file:
+          enabled: true
+          realm-name: quarkus
+          plain-text: true
+    datasource:
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/quarkus_test
+      username: quarkus_test
+      password: quarkus_test

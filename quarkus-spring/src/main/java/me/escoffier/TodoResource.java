@@ -22,14 +22,18 @@ import java.util.List;
 @RolesAllowed({"user"})
 public class TodoResource {
 
-    private final TodoRepository todoRepository;
+    final TodoRepository todoRepository;
+    final SecurityIdentity securityIdentity;
 
-    @Inject
-    SecurityIdentity securityIdentity;
-
-    public TodoResource(TodoRepository todoRepository) {
+    public TodoResource(TodoRepository todoRepository, SecurityIdentity identity) {
         this.todoRepository = todoRepository;
+        this.securityIdentity = identity;
     }
+
+    private String getCurrentUser() {
+        return securityIdentity.getPrincipal().getName();
+    }
+
 
     @GetMapping
     @ResponseBody
@@ -83,7 +87,4 @@ public class TodoResource {
         return ResponseEntity.noContent().build();
     }
 
-    private String getCurrentUser() {
-        return securityIdentity.getPrincipal().getName();
-    }
 }
