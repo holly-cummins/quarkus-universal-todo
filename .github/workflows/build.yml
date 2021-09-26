@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         java: [
-          { 'version': '8', opts: '' },
           { 'version': '11', opts: '' },
           { 'version': '16', opts: '' },
           { 'version': '17', opts: '' }
@@ -43,7 +42,7 @@ jobs:
         run: mvn -B clean verify -f quarkus/pom.xml
 
   build-native:
-    name: Build native application
+    name: Build native applications
     runs-on: ubuntu-latest
     steps:
       - uses: actions/cache@v2
