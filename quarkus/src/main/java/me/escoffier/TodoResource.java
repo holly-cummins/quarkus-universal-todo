@@ -13,14 +13,20 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import static me.escoffier.helper.Exceptions.notFound;
+
 @Path("/api")
 @RolesAllowed({"user"})
 public class TodoResource {
 
-    private final SecurityIdentity securityIdentity;
+    final SecurityIdentity securityIdentity;
 
-    public TodoResource(SecurityIdentity securityIdentity) {
-        this.securityIdentity = securityIdentity;
+    public TodoResource(SecurityIdentity identity) {
+        this.securityIdentity = identity;
+    }
+
+    private String getCurrentUser() {
+        return securityIdentity.getPrincipal().getName();
     }
 
     @GET
@@ -32,9 +38,7 @@ public class TodoResource {
     @Path("/{id}")
     public Todo getOne(@RestPath Long id) {
         return Todo.getTodo(getCurrentUser(), id)
-                .orElseThrow(
-                        () -> new WebApplicationException("Todo with id of " + id + " does not exist.", 404)
-                );
+                .orElseThrow(() -> notFound(id));
     }
 
     @POST
@@ -50,7 +54,7 @@ public class TodoResource {
     @Transactional
     public Response update(@Valid Todo todo, @RestPath Long id) {
         Todo entity = Todo.getTodo(getCurrentUser(), id)
-                .orElseThrow(() -> new WebApplicationException("Todo with id of " + id + " does not exist.", 404));
+                .orElseThrow(() -> notFound(id));
         entity.id = id;
         entity.completed = todo.completed;
         entity.order = todo.order;
@@ -71,12 +75,9 @@ public class TodoResource {
     @Transactional
     public Response deleteOne(@RestPath Long id) {
         Todo entity = Todo.<Todo>findByIdOptional(id)
-                .orElseThrow(() -> new WebApplicationException("Todo with id of " + id + " does not exist.", 404));
+                .orElseThrow(() -> notFound(id));
         entity.delete();
         return Response.noContent().build();
     }
 
-    private String getCurrentUser() {
-        return securityIdentity.getPrincipal().getName();
-    }
 }
