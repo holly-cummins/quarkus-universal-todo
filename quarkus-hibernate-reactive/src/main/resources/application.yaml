@@ -1,0 +1,54 @@
+quarkus:
+
+  hibernate-orm:
+    database:
+      generation: drop-and-create
+
+  oidc:
+    enabled: true
+    auth-server-url: http://localhost:8180/auth/realms/quarkus
+    client-id: app
+
+
+app:
+  frontend:
+    oidc-realm: quarkus
+    oidc-app: app
+    oidc-server: http://localhost:8180/auth
+
+"%test":
+   quarkus:
+     oidc:
+       enabled: false
+     security:
+        users:
+            file:
+              enabled: true
+              realm-name: quarkus
+              plain-text: true
+
+"%prod":
+    quarkus:
+      datasource:
+        db-kind: postgresql
+        username: quarkus_test
+        password: quarkus_test
+        reactive:
+          url: postgresql://localhost:5432/quarkus_test
+          max-size: 20
+
+"%basic":
+  quarkus:
+    oidc:
+      enabled: false
+    security:
+      users:
+        file:
+          enabled: true
+          realm-name: quarkus
+          plain-text: true
+    datasource:
+      reactive:
+        url: postgresql://localhost:5432/quarkus_test
+      username: quarkus_test
+      password: quarkus_test
