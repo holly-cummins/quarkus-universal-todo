@@ -31,7 +31,7 @@ jobs:
       - name: Build Spring Application
         env:
           MAVEN_OPTS: ${{ matrix.java.opts }}
-        run: mvn -B clean verify -f spring/pom.xml
+        run: mvn -B clean verify -f spring/pom.xml -DskipTests
       - name: Build Quarkus Spring Application
         env:
           MAVEN_OPTS: ${{ matrix.java.opts }}
