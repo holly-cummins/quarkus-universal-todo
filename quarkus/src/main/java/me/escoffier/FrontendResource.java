@@ -1,8 +1,8 @@
 package me.escoffier;
 
+import io.quarkus.qute.Location;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
-import io.quarkus.qute.api.ResourcePath;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.inject.Inject;
@@ -18,7 +18,7 @@ import java.net.URI;
 public class FrontendResource {
 
     @Inject
-    @ResourcePath("keycloak.js")
+    @Location("keycloak.js")
     Template keycloak;
 
     @ConfigProperty(name = "app.frontend.oidc-server")
