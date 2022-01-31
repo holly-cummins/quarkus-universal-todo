@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.ws.rs.core.Context;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -20,29 +23,24 @@ import java.util.List;
 @RolesAllowed({"user"})
 public class TodoResource {
 
-    final TodoRepository todoRepository;
-    final SecurityIdentity securityIdentity;
+    private final TodoRepository todoRepository;
 
-    public TodoResource(TodoRepository todoRepository, SecurityIdentity identity) {
+    public TodoResource(TodoRepository todoRepository) {
         this.todoRepository = todoRepository;
-        this.securityIdentity = identity;
     }
 
-    private String getCurrentUser() {
-        return securityIdentity.getPrincipal().getName();
-    }
-
+    @Inject Principal principal;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Todo> getAll() {
-        return todoRepository.findAllByOwnerIgnoreCase(getCurrentUser());
+        return todoRepository.findAllByOwnerIgnoreCase(principal.getName());
     }
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Todo getOne(@PathVariable("id") Long id) {
-        return todoRepository.findByOwnerAndId(getCurrentUser(), id).orElseThrow(
+        return todoRepository.findByOwnerAndId(principal.getName(), id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo with id of " + id + " does not exist.")
         );
     }
@@ -50,7 +48,8 @@ public class TodoResource {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<Todo> create(@Valid @RequestBody Todo item) throws URISyntaxException {
-        item.setOwner(getCurrentUser());
+        System.out.println(principal);
+        item.setOwner(principal.getName());
         Todo result = todoRepository.save(item);
         return ResponseEntity.created(new URI("/api/" + result.getId())).body(result);
     }
@@ -58,13 +57,13 @@ public class TodoResource {
     @PatchMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<Todo> update(@Valid @RequestBody Todo todo, @PathVariable("id") Long id) {
-        Todo entity = todoRepository.findByOwnerAndId(getCurrentUser(), id)
+        Todo entity = todoRepository.findByOwnerAndId(principal.getName(), id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo with id of " + id + " does not exist."));
         entity.setId(id);
         entity.setCompleted(todo.isCompleted());
         entity.setOrder(todo.getOrder());
         entity.setTitle(todo.getTitle());
-        entity.setOwner(getCurrentUser());
+        entity.setOwner(principal.getName());
         Todo result = todoRepository.save(entity);
         return ResponseEntity.ok(result);
     }
@@ -72,7 +71,7 @@ public class TodoResource {
     @DeleteMapping
     @Transactional
     public ResponseEntity<Void> deleteCompleted() {
-        todoRepository.clearCompleted(getCurrentUser());
+        todoRepository.clearCompleted(principal.getName());
         return ResponseEntity.noContent().build();
     }
 

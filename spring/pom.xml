@@ -22,7 +22,7 @@
         <spring-boot.bom.version>2.5.4</spring-boot.bom.version>
         <surefire-plugin.version>2.22.1</surefire-plugin.version>
 
-        <testcontainers.version>1.16.0</testcontainers.version>
+        <testcontainers.version>1.16.2</testcontainers.version>
         <rest-assured.version>4.4.0</rest-assured.version>
     </properties>
 

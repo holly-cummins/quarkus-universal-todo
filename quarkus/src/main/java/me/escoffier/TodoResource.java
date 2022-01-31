@@ -1,6 +1,7 @@
 package me.escoffier;
 
 import io.quarkus.security.identity.SecurityIdentity;
+import me.escoffier.helper.Exceptions;
 import me.escoffier.model.Todo;
 import org.jboss.resteasy.reactive.RestPath;
 
@@ -36,17 +37,17 @@ public class TodoResource {
 
     @GET
     @Path("/{id}")
-    public Todo getOne(@RestPath Long id) {
+    public Todo getOne(@RestPath long id) {
         return Todo.getTodo(getCurrentUser(), id)
-                .orElseThrow(() -> notFound(id));
+                .orElseThrow(() -> Exceptions.notFound(id));
     }
 
     @POST
     @Transactional
-    public Response create(@Valid Todo item) throws URISyntaxException {
-        item.owner = getCurrentUser();
-        Todo.persist(item);
-        return Response.created(new URI("/api/" + item.id)).entity(item).build();
+    public Response create(@Valid Todo todo) throws URISyntaxException {
+        todo.owner = getCurrentUser();
+        todo.persist();
+        return Response.created(new URI("/api/" + todo.id)).entity(todo).build();
     }
 
     @PATCH
@@ -79,5 +80,6 @@ public class TodoResource {
         entity.delete();
         return Response.noContent().build();
     }
+
 
 }

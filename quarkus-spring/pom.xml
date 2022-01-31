@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.escoffier</groupId>
-    <artifactId>universal-todo-spring</artifactId>
+    <artifactId>universal-todo-spring-quarkus</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
@@ -17,10 +17,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <quarkus-plugin.version>2.2.3.Final</quarkus-plugin.version>
+        <quarkus-plugin.version>2.6.3.Final</quarkus-plugin.version>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>2.2.3.Final</quarkus.platform.version>
+        <quarkus.platform.version>2.6.3.Final</quarkus.platform.version>
 
         <surefire-plugin.version>2.22.2</surefire-plugin.version>
     </properties>
@@ -48,11 +48,19 @@
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
             <artifactId>quarkus-spring-di</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-jackson</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
