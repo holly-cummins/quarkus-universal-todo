@@ -10,7 +10,7 @@ A `infrastructure/docker-compose` file starts these required services.
 Run: 
 
 ```shell
-docker-compose -f ./infratructure/docker-compose.yaml up
+docker-compose -f ./infrastructure/docker-compose.yaml up
 ```
 
 Once started (can take a few minutes), open http://localhost:8180/auth/admin/ and login with `admin/admin`.
@@ -61,7 +61,3 @@ Run the native-executable with:
 ```bash
 quarkus/target/universal-todo-quarkus-1.0.0-SNAPSHOT-runner
 ```
-
-
-
-       run:     
