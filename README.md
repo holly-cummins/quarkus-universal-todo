@@ -47,8 +47,7 @@ mvn -B clean verify -f quarkus/pom.xml
 Run it with:
 
 ```bash
-java -jar quarkus/target/universal-todo-spring-1.0.0-SNAPSHOT-runner.jar 
-``` 
+java -jar quarkus/target/universal-todo-quarkus-1.0.0-SNAPSHOT.jar``` 
 
 To build the native executable, run:
 
